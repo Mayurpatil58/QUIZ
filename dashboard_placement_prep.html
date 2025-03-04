@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .dashboard {
+            width: 90%;
+            max-width: 1000px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        
+        .user-info {
+            width: 65%;
+            background: #2c2c2c;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .user-info h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #f1c40f;
+        }
+
+        .user-details p {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #ddd;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        
+        .profile {
+            width: 30%;
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #f1c40f;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .profile input {
+            display: none;
+        }
+
+        .profile h3 {
+            font-size: 18px;
+        }
+
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            background: #1e1e1e;
+            color: white;
+        }
+
+        .modal button {
+            background: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .close-btn {
+            background: red;
+            float: right;
+            border-radius: 50%;
+            padding: 3px 10px;
+            cursor: pointer;
+        }
+
+        
+        .stats {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat-card {
+            width: 30%;
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+        }
+
+        .stat-card h2 {
+            font-size: 26px;
+            margin: 5px 0;
+        }
+
+        
+        .badges {
+            width: 100%;
+            margin-top: 20px;
+            background: #2c2c2c;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .bronze { background: #cd7f32; }
+        .silver { background: #c0c0c0; color: black; }
+        .gold { background: #ffd700; color: black; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        
+        <div class="user-info">
+            <h2>User Information</h2>
+            <div class="user-details">
+                <p><strong>Name:</strong> <span id="name">John Doe</span></p>
+                <p><strong>Email:</strong> <span id="email">mp092752@gmail.com</span></p>
+                <p><strong>Phone:</strong> <span id="phone">+91 9876543210</span></p>
+                <p><strong>USN:</strong> <span id="usn">12345ABC</span></p>
+                <p><strong>College:</strong> <span id="college">GIT</span></p>
+                <button class="edit-btn" onclick="openModal()">Edit Profile</button>
+            </div>
+        </div>
+
+       
+        <div class="profile">
+            <input type="file" id="file-input" accept="image/*" onchange="uploadImage(event)">
+            <img id="profile-img" src="mayur_photo.jpeg" alt="User Image" onclick="document.getElementById('file-input').click();">
+            <h3 id="profile-name">Mayur Patil</h3>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <h2>75</h2>
+                <p>Questions Solved Today</p>
+            </div>
+            <div class="stat-card">
+                <h2>#8</h2>
+                <p>Overall Rank</p>
+            </div>
+        </div>
+
+        
+        <div class="badges">
+            <h2>Achievements</h2>
+            <p>You have earned:</p>
+            <span class="badge silver">Silver</span>
+        </div>
+    </div>
+
+    
+    <div id="editModal" class="modal">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <h2>Edit Profile</h2>
+        <input type="text" id="edit-name" placeholder="Enter Name">
+        <input type="email" id="edit-email" placeholder="Enter Email">
+        <input type="text" id="edit-phone" placeholder="Enter Phone">
+        <input type="text" id="edit-usn" placeholder="Enter USN">
+        <input type="text" id="edit-college" placeholder="Enter College">
+        <button onclick="saveChanges()">Save Changes</button>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById("editModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("editModal").style.display = "none";
+        }
+
+        function saveChanges() {
+            document.getElementById("name").innerText = document.getElementById("edit-name").value;
+            document.getElementById("phone").innerText = document.getElementById("edit-phone").value;
+            document.getElementById("usn").innerText = document.getElementById("edit-usn").value;
+            document.getElementById("college").innerText = document.getElementById("edit-college").value;
+            closeModal();
+        }
+        function uploadImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+</body>
+</html>
