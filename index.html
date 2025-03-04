@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBuzz - Where Knowledge Meets Fun</title>
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --text-color: #4A4A4A;
+            --header-bg: #ADD8E6;
+            --btn-bg: #E0E8F0;
+            --btn-hover: #A0C4E0;
+            --primary-btn: #B3D4FC;
+            --coming-soon-color: #FF8C42;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #E0E0E0;
+            --header-bg: #333333;
+            --btn-bg: #5A5A5A;
+            --btn-hover: #6F91A0;
+            --primary-btn: #4F9EEA;
+            --coming-soon-color: #FFA726;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: var(--header-bg);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header .left, .header .right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header input[type="text"] {
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .header .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 22px;
+            position: relative;
+        }
+
+        .icon-btn[title]::after {
+            content: attr(title);
+            font-size: 12px;
+            position: absolute;
+            background-color: #000;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 0.2s ease-in-out;
+            pointer-events: none;
+        }
+
+        .icon-btn:hover::after {
+            opacity: 1;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .content {
+            flex: 3;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            font-size: 18px;
+            padding: 20px 40px;
+            border-radius: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: var(--btn-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: var(--btn-hover);
+            transform: scale(1.07);
+            box-shadow: 5px 7px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary-large {
+            background-color: var(--primary-btn);
+            font-size: 22px;
+            padding: 30px 50px;
+            border-radius: 14px;
+        }
+
+        .section {
+            display: none;
+            margin-top: 28px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .topics-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .coming-soon {
+            font-size: 19px;
+            font-style: italic;
+            color: var(--coming-soon-color);
+            margin-top: 12px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            background-color: #000;
+            color: white;
+            text-align: center;
+            padding: 12px;
+        }
+    </style>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+            
+            // Show the requested section
+            document.getElementById(sectionId).style.display = 'block';
+
+            // Hide the main content when a section is clicked
+            if (sectionId === 'mainContent') {
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                document.getElementById('mainContent').style.display = 'none';
+            }
+        }
+
+        function showNotification() {
+            window.open('https://www.pinterest.com/search/pins/?q=motivational%20quotes', '_blank');
+        }
+
+        // function openDashboard(){
+        //     window.open('C:\Users\Asus\Desktop\c programs\dashboard_placement_prep.html','_blank');
+        // }
+
+        function openResources() {
+            window.open('https://www.geeksforgeeks.org/', '_blank');
+        }
+
+        function shareWebsite() {
+            const shareData = {
+                title: 'BrainBuzz - Where Knowledge Meets Fun',
+                text: 'Explore BrainBuzz: Your one-stop hub for competitive aptitude, coding, and interview prep!',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch(err => console.error('Share failed:', err));
+            } else {
+                navigator.clipboard.writeText(shareData.url)
+                    .then(() => alert('Link copied to clipboard!'))
+                    .catch(() => alert('Failed to copy link.'));
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="left" style="font-weight:bold; font-size:22px;">BrainBuzz</div>
+        <div class="right">
+            <input type="text" id="searchInput" placeholder="Search topics...">
+            <button class="icon-btn" title="dashboard" onclick="window.location.href='dashboard_placement_prep.html'">📈</button>
+            <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">🌗</button>
+            <button class="icon-btn" onclick="showNotification()" title="Motivation">💡</button>
+            <button class="icon-btn" onclick="openResources()" title="Resources">📚</button>
+            <button class="icon-btn" onclick="shareWebsite()" title="Share">🔗</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="content" id="mainContent">
+            <h2>Explore Topics</h2>
+            <div class="btn-container">
+                <button class="btn btn-primary-large" onclick="showSection('competitive')">Competitive Aptitude</button>
+                <button class="btn btn-primary-large" onclick="showSection('coding')">Coding Essentials</button>
+                <button class="btn btn-primary-large" onclick="showSection('company')">Company Specific Tests</button>
+                <button class="btn btn-primary-large" onclick="showSection('interview')">Interview Preparation</button>
+            </div>
+        </div>
+
+        <div id="competitive" class="section">
+            <button class="btn" onclick="showSection('mainContent')">Back to Main</button>
+            <h3>Competitive Aptitude Topics</h3>
+            <div class="topics-list">
+                <button class="btn">Numbers</button>
+                <button class="btn">LCM & HCF</button>
+                <button class="btn">Percentage</button>
+                <button class="btn">Profit & Loss</button>
+                <button class="btn">Time & Work</button>
+                <button class="btn">Synonyms & Antonyms</button>
+                <button class="btn">Sentence Correction</button>
+                <button class="btn">One Word Substitution</button>
+                <button class="btn">Idioms & Phrases</button>
+            </div>
+        </div>
+
+        <div id="coding" class="section">
+            <button class="btn" onclick="showSection('mainContent')">Back to Main</button>
+            <h3>Coding Essentials Topics</h3>
+            <div class="topics-list">
+                <button class="btn">Python</button>
+                <button class="btn">C</button>
+                <button class="btn">Web Development</button>
+                <button class="btn">DBMS</button>
+            </div>
+        </div>
+
+        <div id="company" class="section">
+            <button class="btn" onclick="showSection('mainContent')">Back to Main</button>
+            <h3>Company Specific Tests</h3>
+            <p class="coming-soon">🚀 Exciting company-wise test content is on the way! Stay tuned for updates. 📘</p>
+            <div class="topics-list">
+                <button class="btn">TCS</button>
+                <button class="btn">Infosys</button>
+                <button class="btn">Wipro</button>
+                <button class="btn">Accenture</button>
+                <button class="btn">Cognizant</button>
+                <button class="btn">Capgemini</button>
+                <button class="btn">HCL</button>
+            </div>
+        </div>
+
+        <div id="interview" class="section">
+            <button class="btn" onclick="showSection('mainContent')">Back to Main</button>
+            <h3>Interview Preparation</h3>
+            <p class="coming-soon">💼 Get ready! Comprehensive interview resources will be available shortly. 🚀</p>
+            <div class="topics-list">
+                <button class="btn">HR Interview</button>
+                <button class="btn">Technical Interview</button>
+                <button class="btn">Resume Building</button>
+                <button class="btn">Behavioral Questions</button>
+                <button class="btn">Situational Judgement</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">BrainBuzz - Your Knowledge Hub © 2025</div>
+</body>
+</html>
